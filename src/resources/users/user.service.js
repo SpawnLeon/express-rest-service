@@ -1,11 +1,13 @@
 const usersRepo = require('./user.memory.repository');
 const User = require('./user.model');
 
-// map user fields to exclude secret fields like "password"
-const getAll = async () => {
-  const users = await usersRepo.getAll();
+const getAll = () => usersRepo.getAll();
 
-  return users.map(User.toResponse)
+const createUser = ({ name, login, password }) => {
+  const user = new User({ name, login, password });
+  return usersRepo.createUser(user);
 };
 
-module.exports = { getAll };
+const getUser = (id) => usersRepo.getUser(id);
+
+module.exports = { getAll, createUser, getUser };
