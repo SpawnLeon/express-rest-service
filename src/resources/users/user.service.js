@@ -10,4 +10,6 @@ const createUser = ({ name, login, password }) => {
 
 const getUser = (id) => usersRepo.getUser(id);
 
-module.exports = { getAll, createUser, getUser };
+const updateUser = (id, userData) => usersRepo.updateUser(id, userData)
+
+module.exports = { getAll, createUser, getUser, updateUser };

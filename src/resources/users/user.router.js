@@ -23,4 +23,14 @@ router.route('/:id').get(async (req, res) => {
   }
 });
 
+router.route('/:id').put(async (req, res) => {
+  const user = await usersService.updateUser(req.params.id, req.body);
+  if (!user) {
+    res.statusCode = 400;
+    res.json({ message: 'Bad request' });
+  } else {
+    res.json(User.toResponse(user));
+  }
+});
+
 module.exports = router;

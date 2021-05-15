@@ -7,6 +7,16 @@ const createUser = async (userData) => {
   return userData;
 };
 
-const getUser = async (id) => USERS.find(user => user.id === id);
+const getUser = async (id) => USERS.find(u => u.id === id);
 
-module.exports = { getAll, createUser,getUser };
+const updateUser = async (id, { login, name, password }) => {
+  const user = await getUser(id);
+  if (!user) {
+    return null;
+  }
+  const idx = USERS.findIndex(u => u.id === id);
+  USERS[idx] = { ...user, login, name, password };
+  return USERS[idx];
+};
+
+module.exports = { getAll, createUser, getUser, updateUser };
