@@ -19,4 +19,14 @@ const updateUser = async (id, { login, name, password }) => {
   return USERS[idx];
 };
 
-module.exports = { getAll, createUser, getUser, updateUser };
+const deleteUser = async (id) => {
+  const user = await getUser(id);
+  if (!user) {
+    return null;
+  }
+  const idx = USERS.findIndex(u => u.id === id);
+  USERS.splice(idx - 1, 1);
+  return user;
+};
+
+module.exports = { getAll, createUser, getUser, updateUser, deleteUser };

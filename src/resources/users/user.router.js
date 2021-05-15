@@ -19,7 +19,6 @@ router.route('/:id').get(async (req, res) => {
     res.json(User.toResponse(user));
   } else {
     res.statusCode = 404;
-    res.json({ message: 'User not found' });
   }
 });
 
@@ -27,9 +26,17 @@ router.route('/:id').put(async (req, res) => {
   const user = await usersService.updateUser(req.params.id, req.body);
   if (!user) {
     res.statusCode = 400;
-    res.json({ message: 'Bad request' });
   } else {
     res.json(User.toResponse(user));
+  }
+});
+
+router.route('/:id').delete(async (req, res) => {
+  const user = await usersService.deleteUser(req.params.id);
+  if (!user) {
+    res.statusCode = 404;
+  } else {
+    res.statusCode = 204;
   }
 });
 
