@@ -1,32 +1,29 @@
+const { v4: uuid } = require('uuid');
+const User = require('./user.model');
+
 const USERS = [];
 
 const getAll = async () => USERS;
 
-const createUser = async (userData) => {
-  USERS.push(userData);
-  return userData;
+const postUser = async (userData) => {
+  USERS.push(new User({ ...userData, id: uuid() }));
+  return USERS[USERS.length - 1];
 };
 
-const getUser = async (id) => USERS.find(u => u.id === id);
+const getUser = async (id) => USERS.find(user => user.id === id);
 
-const updateUser = async (id, { login, name, password }) => {
+const updateUser = async (id, userData) => {
   const user = await getUser(id);
-  if (!user) {
-    return null;
-  }
-  const idx = USERS.findIndex(u => u.id === id);
-  USERS[idx] = { ...user, login, name, password };
-  return USERS[idx];
+  const index = USERS.indexOf(user);
+  USERS[index] = { ...user, ...userData };
+  return USERS[index];
 };
 
-const deleteUser = async (id) => {
+const removeUser = async (id) => {
   const user = await getUser(id);
-  if (!user) {
-    return null;
-  }
-  const idx = USERS.findIndex(u => u.id === id);
-  USERS.splice(idx - 1, 1);
+  const index = USERS.indexOf(user);
+  USERS.splice(index, 1);
   return user;
 };
 
-module.exports = { getAll, createUser, getUser, updateUser, deleteUser };
+module.exports = { getAll, postUser, getUser, updateUser, removeUser };
