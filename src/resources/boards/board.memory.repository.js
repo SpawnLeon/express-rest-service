@@ -21,7 +21,7 @@ const postBoard = async (boardData) => {
   return BOARDS[BOARDS.length - 1];
 };
 
-/**
+
 /**
  * Get Board by id.
  * @async
